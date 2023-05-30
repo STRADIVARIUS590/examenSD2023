@@ -11,8 +11,7 @@ public class Console3 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
-		notify("HíklnkñlñdqqweqweqwedasdasdasdqeqweqeqweOpopLA");
+		notify("mensaje");
 	}
 	
 	public static void notify(String mensaje) {
