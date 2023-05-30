@@ -5,7 +5,7 @@
  * @author office depot
  *
  */
-module ExSD2023Replicacion {
+module examen{
 	requires java.desktop;
         requires mysql.connector.j;
         requires java.sql;
