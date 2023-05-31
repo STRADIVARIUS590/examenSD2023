@@ -153,13 +153,13 @@ public class Login extends javax.swing.JFrame {
                 if(loggedUser != null){
                     switch(loggedUser.getRole()){
                         case "Monitor":
-                            new Panel().setVisible(true);
+                            new Panel(loggedUser).setVisible(true);
                             break;
                         case "Servidor Log":
-                            new Panel().setVisible(true);
+                            new LogView().setVisible(true);
                             break;
-                        case "Panel de Control":
-                            new Panel().setVisible(true);
+                        case "Panel de control":
+                            new Panel(loggedUser).setVisible(true);
                             break;
                     }
                     this.dispose();

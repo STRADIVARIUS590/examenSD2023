@@ -9,6 +9,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -39,7 +41,7 @@ public class ConexionBd {
         return rs;
     }
     
-    public void editar(int id, String newName, double newPrice) {
+    public void editar(int id, String newName, double newPrice, User user) {
         String name = getName(id);
         String message = "";
         try {
@@ -47,7 +49,14 @@ public class ConexionBd {
             st.executeUpdate(query);
             
             //mensaje
-            message = "El producto " + name + " ha sido modificado";
+            message = "El producto " + name + " ha sido modificado por " + user.getName();
+            
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+            Date date = new Date();  
+            
+            String logQuery = "INSERT INTO logs (date, description, user_id) VALUES ('" + formatter.format(date) + "', '" + message + "', " + user.getId() + ")";
+            st.executeUpdate(logQuery);
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }

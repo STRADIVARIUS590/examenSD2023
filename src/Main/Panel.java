@@ -19,13 +19,16 @@ public class Panel extends javax.swing.JFrame {
     private javax.swing.JTextField idTextField;
     private javax.swing.JTextField newNameTextField;
     private javax.swing.JTextField newPriceTextField;
+    private User loggedUser; 
     /**
      * Creates new form Panel
      */
-    public Panel() throws SQLException {
+    public Panel(User user) throws SQLException {
         initComponents();
         setLocationRelativeTo(null);
 
+        loggedUser = user;
+        
         //variables para textfields
         idTextField = jTextField1;
         newNameTextField = jTextField2;
@@ -154,7 +157,7 @@ public class Panel extends javax.swing.JFrame {
 
         // Realizar la edición del registro
         ConexionBd bd = new ConexionBd();
-        bd.editar(id, newName, newPrice);
+        bd.editar(id, newName, newPrice, loggedUser);
         
         try {
             //actualizar tabla
@@ -223,11 +226,11 @@ public class Panel extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
+                /*try {
                     new Panel().setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(Panel.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                }*/
             }
         });
     }
