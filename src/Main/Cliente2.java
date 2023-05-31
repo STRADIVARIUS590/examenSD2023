@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import javax.swing.JOptionPane;
 
 import models.PaqueteEnvio;
 
@@ -80,7 +81,8 @@ public class Cliente2 {
 					
 					System.out.println(paqueteRecibido.getMensaje());
 					
-					if(paqueteRecibido.getMensaje() != null) {						
+					if(paqueteRecibido.getMensaje() != null) {
+                                                JOptionPane.showMessageDialog(null, paqueteRecibido.getMensaje(), "Mensaje recibido", JOptionPane.INFORMATION_MESSAGE);
 						updateLog(paqueteRecibido.getMensaje());
 					}
 					

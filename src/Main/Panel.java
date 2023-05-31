@@ -24,7 +24,8 @@ public class Panel extends javax.swing.JFrame {
      */
     public Panel() throws SQLException {
         initComponents();
-        
+        setLocationRelativeTo(null);
+
         //variables para textfields
         idTextField = jTextField1;
         newNameTextField = jTextField2;

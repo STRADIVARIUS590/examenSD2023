@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import models.PaqueteEnvio;
 
@@ -68,6 +69,7 @@ public class Replica1 {
 				
 				
 				if(mensaje != null) {
+                                        JOptionPane.showMessageDialog(null, mensaje, "Mensaje recibido", JOptionPane.INFORMATION_MESSAGE);
 					updateLog(mensaje);
 				}
 				
