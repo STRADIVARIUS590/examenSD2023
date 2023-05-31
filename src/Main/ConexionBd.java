@@ -55,6 +55,41 @@ public class ConexionBd {
         Console3.notify(message);
     }
     
+    public void insertar(String name, double price) {
+        try {
+            String query = "INSERT INTO products (name, price) VALUES ('" + name + "', " + price + ")";
+            st.executeUpdate(query);
+
+            //mensaje
+            String message = "Se ha insertado un nuevo producto: " + name;
+            Console3.notify(message);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public User login(String username, String password) {
+        try {
+            String query = "SELECT id, username, rol FROM users WHERE username = ? AND password = ?";
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("username");
+                String rol = rs.getString("rol");
+
+                return new User(id, name, rol);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+    
     public String getName(int id) {
         String name = null;
         try {
@@ -67,24 +102,5 @@ public class ConexionBd {
             ex.printStackTrace();
         }
         return name;
-    }
-    
-    public boolean login(String username, String password) {
-        try {
-            String query = "SELECT COUNT(*) AS count FROM users WHERE username = ? AND password = ?";
-            PreparedStatement stmt = con.prepareStatement(query);
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                int count = rs.getInt("count");
-                return count > 0; 
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return false;
     }
 }
