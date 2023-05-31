@@ -6,6 +6,7 @@ package Main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -47,7 +48,6 @@ public class ConexionBd {
             
             //mensaje
             message = "El producto " + name + " ha sido modificado";
-            System.out.println(message);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -67,5 +67,24 @@ public class ConexionBd {
             ex.printStackTrace();
         }
         return name;
+    }
+    
+    public boolean login(String username, String password) {
+        try {
+            String query = "SELECT COUNT(*) AS count FROM users WHERE username = ? AND password = ?";
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                int count = rs.getInt("count");
+                return count > 0; 
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
     }
 }
