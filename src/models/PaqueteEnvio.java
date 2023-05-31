@@ -1,5 +1,5 @@
 package models;
-
+import java.util.HashMap;
 import java.io.Serializable;
 
 public class PaqueteEnvio implements Serializable {
@@ -42,7 +42,15 @@ public class PaqueteEnvio implements Serializable {
 	}
 	
 	public String getMensaje() {
-		return this.mensaje;
+            
+		return this.mensaje.substring(0, mensaje.indexOf("#"));
 	}
+        
+        public  HashMap<String, String> getJson(){
+            HashMap<String, String> map = new HashMap<String, String>();
+            map.put("price", this.mensaje.split("#")[2]);
+            map.put("name", this.mensaje.split("#")[1]);
+            return map ;
+        }
 }
 

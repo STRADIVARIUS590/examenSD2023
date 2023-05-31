@@ -16,7 +16,7 @@ public class Cliente2 {
 		// TODO Auto-generated method stub
 			listen(); // escuchamos las conexiones de la consola
 	
-	
+ 
 		//Client.updateLog("HEopklñ8IL");
 	}
 	
@@ -83,7 +83,10 @@ public class Cliente2 {
 					
 					if(paqueteRecibido.getMensaje() != null) {
                                                 JOptionPane.showMessageDialog(null, paqueteRecibido.getMensaje(), "Mensaje recibido", JOptionPane.INFORMATION_MESSAGE);
-						updateLog(paqueteRecibido.getMensaje());
+						JOptionPane.showMessageDialog(null, paqueteRecibido.getJson().get("name"), "json", JOptionPane.INFORMATION_MESSAGE);
+                                                updateLog(paqueteRecibido.getMensaje());
+                                                
+                                                
 					}
 					
 					///campoChat.append("\n" + paqueteRecibido.getNick() +":  " +  paqueteRecibido.getMensaje());
@@ -95,7 +98,5 @@ public class Cliente2 {
 				System.out.println(e);
 			}
 		}
-	
-	
 
 }

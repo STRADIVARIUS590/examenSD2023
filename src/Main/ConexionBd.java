@@ -49,7 +49,8 @@ public class ConexionBd {
             st.executeUpdate(query);
             
             //mensaje
-            message = "El producto " + name + " ha sido modificado por " + user.getName();
+            message = "El producto " + name + " ha sido modificado por " + user.getName()+ 
+                    "#"+ name + "#" + newPrice;
             
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
             Date date = new Date();  
