@@ -7,6 +7,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -25,13 +27,15 @@ public class Replica1 {
 
 	public static  void updateLog(String mensaje) {
 		String filePath = "log.txt";
-		
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+                
+                Date date = new Date();  
 		File file = new File(filePath);
 		FileWriter fr = null;
 		try {
 			// Below constructor argument decides whether to append or override
 			fr = new FileWriter(file, true);
-			fr.write(mensaje + "\n");
+			fr.write(date + "-" + mensaje + "\n");
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -65,9 +69,7 @@ public class Replica1 {
 				mensaje = paqueteRecibido.getMensaje();
 				
 				
-				System.out.println	("\nip: " + ip + "\n" + "nick: " + nick + "\n" + "mensaje: " + mensaje);
-				
-                                JOptionPane.showMessageDialog(null, mensaje, "Mensaje recibido", JOptionPane.INFORMATION_MESSAGE);
+				System.out.println	("\nip: " + ip + "\n" + "nick: " + nick + "\n" + "mensaje: " + mensaje);				
                                 updateLog(mensaje);
 				
 			///	servidor.close();

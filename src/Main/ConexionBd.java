@@ -41,22 +41,17 @@ public class ConexionBd {
         return rs;
     }
     
-    public void editar(int id, String newName, double newPrice, User user) {
+    public void editar(int id, double newPrice, User user) {
         String name = getName(id);
         String message = "";
         try {
-            String query = "UPDATE products SET name = '" + newName + "', price = " + newPrice + " WHERE id = " + id;
+            String query = "UPDATE products SET price = " + newPrice + " WHERE id = " + id;
             st.executeUpdate(query);
             
             //mensaje
             message = "El producto " + name + " ha sido modificado por " + user.getName()+ 
                     "#"+ name + "#" + newPrice;
             
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
-            Date date = new Date();  
-            
-            String logQuery = "INSERT INTO logs (date, description, user_id) VALUES ('" + formatter.format(date) + "', '" + message + "', " + user.getId() + ")";
-            st.executeUpdate(logQuery);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -76,6 +71,11 @@ public class ConexionBd {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+    
+    public ResultSet buscar(String params) {
+        System.out.println(params);
+        return rs;
     }
     
     public User login(String username, String password) {
