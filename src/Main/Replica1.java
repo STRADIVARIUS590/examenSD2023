@@ -35,7 +35,7 @@ public class Replica1 {
 		try {
 			// Below constructor argument decides whether to append or override
 			fr = new FileWriter(file, true);
-			fr.write(date + "-" + mensaje + "\n");
+			fr.write("[" + formatter.format(date) + "] - " + mensaje + "\n");
 
 		} catch (IOException e) {
 			e.printStackTrace();
