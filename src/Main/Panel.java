@@ -4,11 +4,21 @@
  */
 package Main;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -16,7 +26,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Panel extends javax.swing.JFrame {
     private ResultSet rs;
-    private javax.swing.JTextField newPriceTextField;
     private User loggedUser; 
     private Product selectedProduct;
     /**
@@ -27,12 +36,50 @@ public class Panel extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         loggedUser = user;
-        
-        newPriceTextField = jTextField3;
-        
-        DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
                 
-        tblModel.setRowCount(0);    
+        TableColumnModel tcm = jTable1.getColumnModel();
+        tcm.removeColumn(tcm.getColumn(0));
+        
+        DefaultTableCellRenderer tableRenderer =  new DefaultTableCellRenderer();
+        
+        tableRenderer.setBackground(new Color(232, 232, 232));
+        tableRenderer.setOpaque(true);
+        tableRenderer.setAlignmentX(SwingConstants.CENTER);
+        tableRenderer.setForeground(Color.BLACK);
+        jTable1.getTableHeader().setDefaultRenderer(tableRenderer);
+        jScrollPane1.getVerticalScrollBar().setPreferredSize(new Dimension(0,0));
+
+        jTable1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+        public void valueChanged(ListSelectionEvent event) {
+            if(jTable1.getSelectedRow() >= 0){
+                selectedProduct = new Product(Integer.valueOf(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 
+                    0).toString()), jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 
+                    1).toString(), jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 
+                    2).toString(), Double.parseDouble(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 
+                    3).toString()));
+                jLabel2.setText(selectedProduct.getName());
+                jTextField3.setText(String.valueOf(selectedProduct.getPrice()));
+            }
+            else{
+                jLabel2.setText("Seleccione un producto");
+                jTextField3.setText("");
+            }
+        }
+        });
+        
+        jTextField1.getDocument().addDocumentListener(new DocumentListener() {
+        public void changedUpdate(DocumentEvent e) {
+          buscar(); 
+        }
+        public void removeUpdate(DocumentEvent e) {
+          buscar();
+        }
+        public void insertUpdate(DocumentEvent e) {
+          buscar();
+        }
+        });
+        
+        showTable();
     }
 
     private void buscar(){
@@ -88,9 +135,11 @@ public class Panel extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTable1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -101,12 +150,21 @@ public class Panel extends javax.swing.JFrame {
             new String [] {
                 "ID", "Producto", "Marca", "Precio"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable1.setCellSelectionEnabled(true);
         jScrollPane1.setViewportView(jTable1);
         jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         jTextField3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jTextField3.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField3ActionPerformed(evt);
@@ -127,6 +185,7 @@ public class Panel extends javax.swing.JFrame {
         jLabel1.setText("Productos");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel2.setText("Seleccione un producto");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -137,12 +196,22 @@ public class Panel extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setText("Buscar :");
 
+        jButton2.setBackground(new java.awt.Color(255, 97, 89));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Cerrar sesión");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -150,24 +219,28 @@ public class Panel extends javax.swing.JFrame {
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(108, 108, 108)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(101, 101, 101)
-                                .addComponent(jLabel2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(122, 122, 122)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(145, 145, 145)
-                                .addComponent(jButton1)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel1)))
+                        .addGap(0, 1, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField1))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton2)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton1))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(6, 6, 6)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -180,16 +253,19 @@ public class Panel extends javax.swing.JFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
-                .addGap(25, 25, 25)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(1, 1, 1)))
+                .addGap(19, 19, 19))
         );
 
         pack();
@@ -197,36 +273,37 @@ public class Panel extends javax.swing.JFrame {
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
+        editar();
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        double newPrice = Double.parseDouble(newPriceTextField.getText());
+        editar();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        new Login().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private void editar(){
         // Realizar la edición del registro
         ConexionBd bd = new ConexionBd();
-        bd.editar(selectedProduct.getId(), newPrice, loggedUser);
+        bd.editar(selectedProduct.getId(), Double.parseDouble(jTextField3.getText()), loggedUser);
         
         buscar();
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-    
+    }
     private void showTable() throws SQLException{
         //conexión a la base de datos
         ConexionBd bd = new ConexionBd();
         
+        DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
+                
+        tblModel.setRowCount(0);
+
         //consulta
         rs = bd.consultar("products");
-        
-        //tabla
-        jTable1 = new javax.swing.JTable();
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
-            new String [] {
-                "ID", "Producto", "Precio"
-            }
-        ));
-
+       
         jScrollPane1.setViewportView(jTable1);
 
         while(rs.next()){
@@ -235,8 +312,6 @@ public class Panel extends javax.swing.JFrame {
             String brand = rs.getString("brand");
             String price = rs.getString("price");
             String tbData[] = {id, name, brand, price};
-
-            DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
 
             tblModel.addRow(tbData);
         }
@@ -260,6 +335,7 @@ public class Panel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
