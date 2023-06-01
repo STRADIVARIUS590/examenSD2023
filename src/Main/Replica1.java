@@ -67,11 +67,8 @@ public class Replica1 {
 				
 				System.out.println	("\nip: " + ip + "\n" + "nick: " + nick + "\n" + "mensaje: " + mensaje);
 				
-				
-				if(mensaje != null) {
-                                        JOptionPane.showMessageDialog(null, mensaje, "Mensaje recibido", JOptionPane.INFORMATION_MESSAGE);
-					updateLog(mensaje);
-				}
+                                JOptionPane.showMessageDialog(null, mensaje, "Mensaje recibido", JOptionPane.INFORMATION_MESSAGE);
+                                updateLog(mensaje);
 				
 			///	servidor.close();
 	 

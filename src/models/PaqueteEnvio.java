@@ -43,7 +43,7 @@ public class PaqueteEnvio implements Serializable {
 	
 	public String getMensaje() {
             
-		return this.mensaje.substring(0, mensaje.indexOf("#"));
+            return this.mensaje.split("#")[0];
 	}
         
         public  HashMap<String, String> getJson(){

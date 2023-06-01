@@ -81,13 +81,10 @@ public class Cliente2 {
 					
 					System.out.println(paqueteRecibido.getMensaje());
 					
-					if(paqueteRecibido.getMensaje() != null) {
-                                                JOptionPane.showMessageDialog(null, paqueteRecibido.getMensaje(), "Mensaje recibido", JOptionPane.INFORMATION_MESSAGE);
-						JOptionPane.showMessageDialog(null, paqueteRecibido.getJson().get("name"), "json", JOptionPane.INFORMATION_MESSAGE);
-                                                updateLog(paqueteRecibido.getMensaje());
+                                        JOptionPane.showMessageDialog(null, paqueteRecibido.getMensaje(), "Mensaje recibido", JOptionPane.INFORMATION_MESSAGE);
+                                        JOptionPane.showMessageDialog(null, paqueteRecibido.getJson().get("name"), "json", JOptionPane.INFORMATION_MESSAGE);
+                                        updateLog(paqueteRecibido.getMensaje());
                                                 
-                                                
-					}
 					
 					///campoChat.append("\n" + paqueteRecibido.getNick() +":  " +  paqueteRecibido.getMensaje());
 

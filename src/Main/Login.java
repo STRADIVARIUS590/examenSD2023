@@ -151,17 +151,7 @@ public class Login extends javax.swing.JFrame {
                 User loggedUser = bd.login(jTextField1.getText(), jPasswordField1.getText());
         
                 if(loggedUser != null){
-                    switch(loggedUser.getRole()){
-                        case "Monitor":
-                            new Panel(loggedUser).setVisible(true);
-                            break;
-                        case "Servidor Log":
-                            new LogView().setVisible(true);
-                            break;
-                        case "Panel de control":
-                            new Panel(loggedUser).setVisible(true);
-                            break;
-                    }
+                    new Panel(loggedUser).setVisible(true);
                     this.dispose();
                 }
                 else{
