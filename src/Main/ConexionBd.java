@@ -73,8 +73,16 @@ public class ConexionBd {
         }
     }
     
-    public ResultSet buscar(String params) {
-        System.out.println(params);
+    public ResultSet buscar(String field) {
+        try {
+            String query = "SELECT * FROM products WHERE name LIKE ? OR brand LIKE ?";
+            PreparedStatement stmt = con.prepareStatement(query);
+            stmt.setString(1, "%" + field + "%");
+            stmt.setString(2, "%" + field + "%");
+            rs = stmt.executeQuery();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         return rs;
     }
     

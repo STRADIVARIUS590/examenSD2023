@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-05-2023 a las 06:12:12
+-- Tiempo de generación: 03-06-2023 a las 00:48:35
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.2.0
 
@@ -52,11 +52,26 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `brand`, `price`) VALUES
-(1, 'Wii', 'Nintendo', '3000.00'),
-(2, 'Xbox One', 'Microsoft', '6000.00'),
-(3, 'PlayStation 3', 'Sony', '4500.00'),
-(4, 'Nintendo DS', 'Nintendo', '3000.00'),
-(5, 'Nintendo Virtualboy', 'Nintendo', '9700.00');
+(1, 'Nintendo Entertainment System (NES)', 'Nintendo', '3980.00'),
+(2, 'Super Nintendo Entertainment System (SNES)', 'Nintendo', '3980.00'),
+(3, 'Nintendo 64', 'Nintendo', '3980.00'),
+(4, 'GameCube', 'Nintendo', '3980.00'),
+(5, 'Wii', 'Nintendo', '4980.00'),
+(6, 'Wii U', 'Nintendo', '5980.00'),
+(7, 'Nintendo Switch', 'Nintendo', '5980.00'),
+(8, 'Sega Master System', 'Sega', '3980.00'),
+(9, 'Sega Genesis', 'Sega', '3780.00'),
+(10, 'Sega Saturn', 'Sega', '7980.00'),
+(11, 'Sega Dreamcast', 'Sega', '3980.00'),
+(12, 'PlayStation', 'Sony', '5980.00'),
+(13, 'PlayStation 2', 'Sony', '5980.00'),
+(14, 'PlayStation 3', 'Sony', '9980.00'),
+(15, 'PlayStation 4', 'Sony', '7980.00'),
+(16, 'PlayStation 5', 'Sony', '9980.00'),
+(17, 'Xbox', 'Microsoft', '5980.00'),
+(18, 'Xbox 360', 'Microsoft', '5980.00'),
+(19, 'Xbox One', 'Microsoft', '5980.00'),
+(20, 'Xbox Series X', 'Microsoft', '9980.00');
 
 -- --------------------------------------------------------
 
@@ -118,7 +133,7 @@ ALTER TABLE `logs`
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
