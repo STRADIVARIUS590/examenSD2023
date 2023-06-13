@@ -41,7 +41,7 @@ public class ConexionBd {
         return rs;
     }
     
-    public void editar(int id, double newPrice, User user) {
+    public void editar(int id, double newPrice, User user, double oldprice) {
         String name = getName(id);
         String message = "";
         try {
@@ -50,14 +50,14 @@ public class ConexionBd {
             
             //mensaje
             message = "El producto " + name + " ha sido modificado por " + user.getName()+ 
-                    "#"+ name + "#" + newPrice;
+                    "#"+ name + "#" + newPrice + "#" + oldprice;
             
 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         
-        Console3.notify(message);
+        Console3.notify(String.valueOf(id), message);
     }
     
     public void insertar(String name, double price) {
@@ -67,7 +67,8 @@ public class ConexionBd {
 
             //mensaje
             String message = "Se ha insertado un nuevo producto: " + name;
-            Console3.notify(message);
+            rs.last();
+            Console3.notify(String.valueOf(rs.getRow()+1), message);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

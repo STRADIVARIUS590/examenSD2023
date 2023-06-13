@@ -11,17 +11,18 @@ import javax.swing.JOptionPane;
 import models.PaqueteEnvio;
 
 public class Cliente2 {
-
+    public static ActualizacionProductos ap = new ActualizacionProductos();
+    public static String old_price = "0";
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        
+        ap.setVisible(true);
         listen(); // escuchamos las conexiones de la consola
 
         //Client.updateLog("HEopklñ8IL");
     }
 
-    public static void updateData() {
-        // actualiamos datos de la ventana y en bd 
-
+    public static void updateData(String product_name) {
+        ap.product_name_lbl.setText(product_name);
     }
 
     public static void updateLog(String mensaje) {
@@ -62,7 +63,10 @@ public class Cliente2 {
 
                 System.out.println(paqueteRecibido.getMensaje());
                 
-                new ActualizacionProductos().setVisible(true);
+                ap.setImage(paqueteRecibido.getIp());
+                ap.product_name_lbl.setText(paqueteRecibido.getJson().get("name"));
+                ap.precio_anterior_lbl.setText(paqueteRecibido.getJson().get("oldPrice"));
+                ap.precio_nuevo_lbl.setText(paqueteRecibido.getJson().get("price"));
                 //JOptionPane.showMessageDialog(null, paqueteRecibido.getMensaje(), "Mensaje recibido", JOptionPane.INFORMATION_MESSAGE);
                 //JOptionPane.showMessageDialog(null, paqueteRecibido.getJson().get("name"), "json", JOptionPane.INFORMATION_MESSAGE);
                 updateLog(paqueteRecibido.getMensaje());

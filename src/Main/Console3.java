@@ -11,10 +11,10 @@ public class Console3 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		notify("mensaje");
+		notify("0","mensaje");
 	}
 	
-	public static void notify(String mensaje) {
+	public static void notify(String id, String mensaje) {
 		try {
 						
 			// ip del servidor
@@ -22,7 +22,7 @@ public class Console3 {
 			
 			Socket socket = new Socket( SERVER_IP, 9999);
 		
-			PaqueteEnvio paquete = new PaqueteEnvio("AAA", "QQQ", mensaje);
+			PaqueteEnvio paquete = new PaqueteEnvio("AAA", id, mensaje);
 			
 			ObjectOutputStream flujoSalida = new ObjectOutputStream(socket.getOutputStream());
 			flujoSalida.writeObject(paquete);

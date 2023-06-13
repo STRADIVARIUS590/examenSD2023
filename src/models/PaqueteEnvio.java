@@ -48,6 +48,7 @@ public class PaqueteEnvio implements Serializable {
         
         public  HashMap<String, String> getJson(){
             HashMap<String, String> map = new HashMap<String, String>();
+            map.put("oldPrice", this.mensaje.split("#")[3]);
             map.put("price", this.mensaje.split("#")[2]);
             map.put("name", this.mensaje.split("#")[1]);
             return map ;

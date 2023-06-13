@@ -3,20 +3,14 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ActualizacionProductos extends javax.swing.JFrame {
+    private ImageIcon originalIcon = new ImageIcon(getClass().getResource("/img/0.jpg"));
 
     public ActualizacionProductos() {
         initComponents();
+        setLocationRelativeTo(null);
+        setImage("0");
         
-        //Obtener la imagen
-        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/img/1.jpg"));
         
-        //Escalar la imagen al tamaño del label
-        Image originalImage = originalIcon.getImage();
-        Image resizedImage = originalImage.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
-        ImageIcon resizedIcon = new ImageIcon(resizedImage);
-
-        //Asignar la imagen reescalada
-        jLabel1.setIcon(resizedIcon);
     }
 
     @SuppressWarnings("unchecked")
@@ -24,66 +18,72 @@ public class ActualizacionProductos extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        product_name_lbl = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        precio_anterior_lbl = new javax.swing.JLabel();
+        precio_nuevo_lbl = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("jLabel1");
 
-        jLabel2.setText("NINTENDO");
+        product_name_lbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        product_name_lbl.setText("Seleccione un producto");
 
         jLabel3.setText("Se actualizo el producto:");
 
-        jLabel4.setText("NES");
+        precio_anterior_lbl.setText("0");
 
-        jLabel5.setText("3980");
+        precio_nuevo_lbl.setText("0");
 
-        jLabel6.setText("3380");
+        jLabel8.setText("Precio anterior: $");
 
-        jLabel7.setText("--->");
+        jLabel9.setText("Precio nuevo: $");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel7)
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel6)))
-                .addGap(110, 110, 110))
+                        .addGap(80, 80, 80)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(product_name_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(131, 131, 131)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(precio_anterior_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                            .addComponent(precio_nuevo_lbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(80, 80, 80))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
+                .addContainerGap(33, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(product_name_lbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(precio_anterior_lbl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addGap(104, 104, 104))
+                    .addComponent(jLabel9)
+                    .addComponent(precio_nuevo_lbl))
+                .addGap(115, 115, 115))
         );
 
         pack();
@@ -120,14 +120,22 @@ public class ActualizacionProductos extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void setImage(String imageId){
+        Image originalImage = new ImageIcon(getClass().getResource("/img/" + imageId +".jpg")).getImage();
+        Image resizedImage = originalImage.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(resizedImage);
+
+        jLabel1.setIcon(resizedIcon);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    public javax.swing.JLabel precio_anterior_lbl;
+    public javax.swing.JLabel precio_nuevo_lbl;
+    public javax.swing.JLabel product_name_lbl;
     // End of variables declaration//GEN-END:variables
 }

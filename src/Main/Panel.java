@@ -289,7 +289,7 @@ public class Panel extends javax.swing.JFrame {
     private void editar(){
         // Realizar la edición del registro
         ConexionBd bd = new ConexionBd();
-        bd.editar(selectedProduct.getId(), Double.parseDouble(jTextField3.getText()), loggedUser);
+        bd.editar(selectedProduct.getId(), Double.parseDouble(jTextField3.getText()), loggedUser, selectedProduct.getPrice());
         
         buscar();
     }
